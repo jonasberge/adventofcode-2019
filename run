@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+
+PYTHON=python3
+
+if [ "$#" != 1 ] && [ "$#" != 2 ]; then
+	echo "usage: ./run 12 example"
+	echo "runs day 12 with example.in"
+	exit 1
+fi
+
+DAY=$(seq -f "%02g" "$1" "$1")
+INPUT="${2:-data}"
+
+SCRIPT="$DAY/solve.py"
+
+if ! find "$DAY" 1>/dev/null; then exit 1; fi
+if ! find "$SCRIPT" 1>/dev/null; then exit 1; fi
+
+DATA=$(cat "$DAY/$INPUT.in")
+if [ "$?" != 0 ]; then exit 1; fi
+
+echo "$DATA" | $PYTHON "$SCRIPT"
+
